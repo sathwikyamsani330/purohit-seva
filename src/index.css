@@ -1,0 +1,137 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #701a28;
+  --color-primary-hover: #59131e;
+  --color-primary-light: #fdf2f4;
+  --color-primary-border: #f5ccd2;
+
+  --color-kumkum-50: #fdf2f4;
+  --color-kumkum-100: #fae4e7;
+  --color-kumkum-200: #f5ccd2;
+  --color-kumkum-300: #eda4af;
+  --color-kumkum-400: #e07081;
+  --color-kumkum-500: #cc4358;
+  --color-kumkum-600: #8c2433;
+  --color-kumkum-700: #701a28;
+  --color-kumkum-800: #59131e;
+  --color-kumkum-900: #420d15;
+  --color-kumkum-950: #200609;
+
+  /* Remap orange-* to rich Kumkum Maroon scale */
+  --color-orange-50: #fdf2f4;
+  --color-orange-100: #fae4e7;
+  --color-orange-200: #f5ccd2;
+  --color-orange-300: #eda4af;
+  --color-orange-400: #cc4358;
+  --color-orange-500: #8c2433;
+  --color-orange-600: #701a28;
+  --color-orange-700: #59131e;
+  --color-orange-800: #420d15;
+  --color-orange-900: #2b080d;
+  --color-orange-950: #200609;
+
+  /* Remap amber-* to Sandalwood Gold & Kumkum accents */
+  --color-amber-50: #fdf2f4;
+  --color-amber-100: #fae4e7;
+  --color-amber-200: #f5ccd2;
+  --color-amber-300: #e5b869;
+  --color-amber-400: #d4a53e;
+  --color-amber-500: #c9932b;
+  --color-amber-600: #701a28;
+  --color-amber-700: #59131e;
+  --color-amber-800: #420d15;
+  --color-amber-900: #2b080d;
+  --color-amber-950: #200609;
+
+  /* Remap slate-* to warm sandalwood neutrals */
+  --color-slate-50: #faf8f5;
+  --color-slate-100: #f3efe8;
+  --color-slate-200: #eadfd9;
+  --color-slate-300: #d8c8c2;
+  --color-slate-400: #a8948e;
+  --color-slate-500: #7a6660;
+  --color-slate-600: #5c4a45;
+  --color-slate-700: #44322e;
+  --color-slate-800: #2d1e1c;
+  --color-slate-900: #22060a;
+  --color-slate-950: #160305;
+
+  /* Remap stone-* to warm sandalwood neutrals */
+  --color-stone-50: #faf8f5;
+  --color-stone-100: #f3efe8;
+  --color-stone-200: #eadfd9;
+  --color-stone-300: #d8c8c2;
+  --color-stone-400: #a8948e;
+  --color-stone-500: #7a6660;
+  --color-stone-600: #5c4a45;
+  --color-stone-700: #44322e;
+  --color-stone-800: #2d1e1c;
+  --color-stone-900: #22060a;
+  --color-stone-950: #160305;
+
+  --color-ivory-50: #ffffff;
+  --color-ivory-100: #faf8f5;
+  --color-ivory-200: #f3efe8;
+  --color-ivory-300: #eae3d8;
+  --color-ivory-400: #ded3c3;
+  --color-ivory-500: #c9bca6;
+
+  --color-gold-50: #fbf8ed;
+  --color-gold-100: #f5eed4;
+  --color-gold-200: #ecd9a3;
+  --color-gold-300: #e5b869;
+  --color-gold-400: #d4a53e;
+  --color-gold-500: #c9932b;
+  --color-gold-600: #b07821;
+  --color-gold-700: #8d591c;
+  --color-gold-800: #74471c;
+  --color-gold-900: #623c1b;
+}
+
+@layer base {
+  body {
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: #faf8f5;
+    color: #22060a;
+  }
+
+  ::selection {
+    background-color: #701a28;
+    color: #ffffff;
+  }
+
+  .font-heading {
+    font-family: 'Cinzel', serif;
+  }
+
+  .font-cultural {
+    font-family: 'Rozha One', serif;
+  }
+}
+
+/* Custom subtle scrollbar with Kumkum and Sandalwood tones */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #faf8f5;
+}
+::-webkit-scrollbar-thumb {
+  background: #d8c8c2;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #701a28;
+}
+
+/* Subtle decorative sacred mandala pattern */
+.bg-mandala-pattern {
+  background-color: #faf8f5;
+  background-image: radial-gradient(#701a28 0.75px, transparent 0.75px), radial-gradient(#701a28 0.75px, #faf8f5 0.75px);
+  background-size: 32px 32px;
+  background-position: 0 0, 16px 16px;
+  background-opacity: 0.05;
+}
+

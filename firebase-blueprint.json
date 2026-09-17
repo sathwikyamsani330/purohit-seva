@@ -1,0 +1,264 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile document storing basic account and role data.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "name": { "type": "string", "maxLength": 100 },
+        "email": { "type": "string", "maxLength": 150 },
+        "phone": { "type": "string", "maxLength": 30 },
+        "role": { "type": "string", "enum": ["customer", "priest", "admin"] },
+        "avatarUrl": { "type": "string", "maxLength": 500 },
+        "city": { "type": "string", "maxLength": 100 },
+        "gotra": { "type": "string", "maxLength": 100 },
+        "address": { "type": "string", "maxLength": 500 },
+        "createdAt": { "type": "string", "maxLength": 50 }
+      },
+      "required": ["id", "name", "email", "role"]
+    },
+    "Priest": {
+      "title": "Priest",
+      "description": "Registered Vedic priest / acharya profile and service offerings.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "name": { "type": "string", "maxLength": 100 },
+        "title": { "type": "string", "maxLength": 150 },
+        "avatarUrl": { "type": "string", "maxLength": 500 },
+        "isVerified": { "type": "boolean" },
+        "verificationStatus": { "type": "string", "enum": ["verified", "pending", "rejected", "suspended"] },
+        "experienceYears": { "type": "number" },
+        "location": { "type": "string", "maxLength": 200 },
+        "city": { "type": "string", "maxLength": 100 },
+        "tradition": { "type": "string", "maxLength": 100 },
+        "rating": { "type": "number" },
+        "reviewCount": { "type": "number" },
+        "startingPrice": { "type": "number" },
+        "about": { "type": "string", "maxLength": 2000 },
+        "phone": { "type": "string", "maxLength": 30 },
+        "email": { "type": "string", "maxLength": 150 },
+        "availableDates": { "type": "array", "items": { "type": "string" } },
+        "blockedDates": { "type": "array", "items": { "type": "string" } },
+        "timeSlots": { "type": "array", "items": { "type": "string" } }
+      },
+      "required": ["id", "name", "city", "startingPrice"]
+    },
+    "PriestRequest": {
+      "title": "PriestRequest",
+      "description": "Service request submitted by customer to priest before payment.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "customerId": { "type": "string", "maxLength": 128 },
+        "customerName": { "type": "string", "maxLength": 100 },
+        "customerPhone": { "type": "string", "maxLength": 30 },
+        "customerEmail": { "type": "string", "maxLength": 150 },
+        "priestId": { "type": "string", "maxLength": 128 },
+        "priestName": { "type": "string", "maxLength": 100 },
+        "eventId": { "type": "string", "maxLength": 100 },
+        "eventName": { "type": "string", "maxLength": 150 },
+        "date": { "type": "string", "maxLength": 20 },
+        "time": { "type": "string", "maxLength": 20 },
+        "location": { "type": "string", "maxLength": 300 },
+        "latitude": { "type": "number" },
+        "longitude": { "type": "number" },
+        "notes": { "type": "string", "maxLength": 1000 },
+        "servicePrice": { "type": "number" },
+        "totalAmount": { "type": "number" },
+        "status": { "type": "string", "enum": ["PENDING", "ACCEPTED", "REJECTED", "PAYMENT_PENDING", "CONFIRMED", "CANCELLED", "COMPLETED"] },
+        "paymentStatus": { "type": "string", "enum": ["pending", "completed", "PAID", "UNPAID", "failed"] },
+        "createdAt": { "type": "string", "maxLength": 50 }
+      },
+      "required": ["id", "customerId", "priestId", "eventId", "date", "status"]
+    },
+    "Booking": {
+      "title": "Booking",
+      "description": "Confirmed booking record with payment and ceremony execution state.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "bookingId": { "type": "string", "maxLength": 64 },
+        "requestId": { "type": "string", "maxLength": 128 },
+        "customerId": { "type": "string", "maxLength": 128 },
+        "customerName": { "type": "string", "maxLength": 100 },
+        "customerPhone": { "type": "string", "maxLength": 30 },
+        "customerEmail": { "type": "string", "maxLength": 150 },
+        "priestId": { "type": "string", "maxLength": 128 },
+        "priestName": { "type": "string", "maxLength": 100 },
+        "priestPhone": { "type": "string", "maxLength": 30 },
+        "eventId": { "type": "string", "maxLength": 100 },
+        "eventName": { "type": "string", "maxLength": 150 },
+        "date": { "type": "string", "maxLength": 20 },
+        "time": { "type": "string", "maxLength": 20 },
+        "location": { "type": "string", "maxLength": 300 },
+        "latitude": { "type": "number" },
+        "longitude": { "type": "number" },
+        "servicePrice": { "type": "number" },
+        "totalAmount": { "type": "number" },
+        "status": { "type": "string", "maxLength": 30 },
+        "bookingStatus": { "type": "string", "enum": ["CONFIRMED", "COMPLETED", "CANCELLED"] },
+        "paymentStatus": { "type": "string", "maxLength": 30 },
+        "paymentMethod": { "type": "string", "maxLength": 50 },
+        "createdAt": { "type": "string", "maxLength": 50 }
+      },
+      "required": ["id", "customerId", "priestId", "eventId", "date", "status", "paymentStatus"]
+    },
+    "Review": {
+      "title": "Review",
+      "description": "Customer feedback and ratings for completed puja ceremonies.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "priestId": { "type": "string", "maxLength": 128 },
+        "customerId": { "type": "string", "maxLength": 128 },
+        "customerName": { "type": "string", "maxLength": 100 },
+        "bookingId": { "type": "string", "maxLength": 128 },
+        "eventName": { "type": "string", "maxLength": 150 },
+        "rating": { "type": "number" },
+        "comment": { "type": "string", "maxLength": 1000 },
+        "date": { "type": "string", "maxLength": 50 },
+        "location": { "type": "string", "maxLength": 100 }
+      },
+      "required": ["id", "priestId", "customerId", "rating", "comment"]
+    },
+    "Notification": {
+      "title": "Notification",
+      "description": "In-app status notification for customer, priest, or admin.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "targetRole": { "type": "string", "enum": ["customer", "priest", "admin", "all"] },
+        "title": { "type": "string", "maxLength": 150 },
+        "message": { "type": "string", "maxLength": 500 },
+        "type": { "type": "string", "maxLength": 50 },
+        "category": { "type": "string", "enum": ["BOOKING", "PAYMENT", "CEREMONY", "REVIEW", "REWARDS", "SECURITY", "SUPPORT", "SYSTEM"] },
+        "priority": { "type": "string", "enum": ["normal", "high", "urgent"] },
+        "requestId": { "type": "string", "maxLength": 128 },
+        "bookingId": { "type": "string", "maxLength": 128 },
+        "reportId": { "type": "string", "maxLength": 128 },
+        "link": { "type": "string", "maxLength": 255 },
+        "read": { "type": "boolean" },
+        "readAt": { "type": "string", "maxLength": 50 },
+        "createdAt": { "type": "string", "maxLength": 50 }
+      },
+      "required": ["id", "userId", "title", "message", "read"]
+    },
+    "NotificationPreferences": {
+      "title": "NotificationPreferences",
+      "description": "User notification preferences and channel toggles.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "maxLength": 128 },
+        "promotional": { "type": "boolean" },
+        "rewards": { "type": "boolean" },
+        "generalUpdates": { "type": "boolean" },
+        "bookingUpdates": { "type": "boolean" },
+        "paymentAlerts": { "type": "boolean" },
+        "securityAndSafety": { "type": "boolean" },
+        "inApp": { "type": "boolean" },
+        "sms": { "type": "boolean" },
+        "whatsapp": { "type": "boolean" },
+        "email": { "type": "boolean" }
+      },
+      "required": ["userId", "bookingUpdates", "paymentAlerts", "securityAndSafety"]
+    },
+    "PaymentOrder": {
+      "title": "PaymentOrder",
+      "description": "Server-authoritative payment order record created with Razorpay or tracked demo.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "orderId": { "type": "string", "maxLength": 128 },
+        "requestId": { "type": "string", "maxLength": 128 },
+        "customerId": { "type": "string", "maxLength": 128 },
+        "priestId": { "type": "string", "maxLength": 128 },
+        "currency": { "type": "string", "enum": ["INR"] },
+        "servicePrice": { "type": "number" },
+        "platformFee": { "type": "number" },
+        "rewardDiscount": { "type": "number" },
+        "totalAmount": { "type": "number" },
+        "amountInPaise": { "type": "number" },
+        "status": { "type": "string", "enum": ["CREATED", "PAID", "FAILED", "EXPIRED", "REFUNDED"] },
+        "paymentId": { "type": "string", "maxLength": 128 },
+        "isDemoMode": { "type": "boolean" },
+        "platformCommission": { "type": "number" },
+        "priestPayableAmount": { "type": "number" },
+        "escrowStatus": { "type": "string", "enum": ["HELD_IN_ESCROW", "READY_FOR_PAYOUT", "SETTLED", "REFUNDED"] },
+        "createdAt": { "type": "string", "maxLength": 50 },
+        "expiresAt": { "type": "string", "maxLength": 50 }
+      },
+      "required": ["id", "orderId", "requestId", "customerId", "priestId", "currency", "totalAmount", "status"]
+    },
+    "PaymentWebhook": {
+      "title": "PaymentWebhook",
+      "description": "Audit record for Razorpay webhook event delivery and idempotency.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "event": { "type": "string", "maxLength": 100 },
+        "orderId": { "type": "string", "maxLength": 128 },
+        "paymentId": { "type": "string", "maxLength": 128 },
+        "signatureValid": { "type": "boolean" },
+        "processedAt": { "type": "string", "maxLength": 50 }
+      },
+      "required": ["id", "event", "signatureValid", "processedAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "Public and account user documents mapped by user Auth UID."
+    },
+    "/priests/{priestId}": {
+      "schema": "Priest",
+      "description": "Priests directory profiles and puja catalog."
+    },
+    "/requests/{requestId}": {
+      "schema": "PriestRequest",
+      "description": "Customer ceremony booking requests submitted to priests."
+    },
+    "/bookings/{bookingId}": {
+      "schema": "Booking",
+      "description": "Confirmed and paid bookings."
+    },
+    "/reviews/{reviewId}": {
+      "schema": "Review",
+      "description": "Ratings and reviews submitted by devotees."
+    },
+    "/notifications/{notificationId}": {
+      "schema": "Notification",
+      "description": "User specific alerts and updates."
+    },
+    "/notificationPreferences/{userId}": {
+      "schema": "NotificationPreferences",
+      "description": "User notification preferences configuration."
+    },
+    "/supportRequests/{requestId}": {
+      "schema": "Booking",
+      "description": "Customer emergency assistance and support tickets."
+    },
+    "/bookings/{bookingId}/statusHistory/{histId}": {
+      "schema": "Booking",
+      "description": "Lifecycle transition audit logs for a booking."
+    },
+    "/users/{userId}/rewards/{rewardId}": {
+      "schema": "User",
+      "description": "Devotee unlocked reward vouchers."
+    },
+    "/users/{userId}/rewardTransactions/{txId}": {
+      "schema": "User",
+      "description": "Devotee loyalty points and coin ledger entries."
+    },
+    "/paymentOrders/{orderId}": {
+      "schema": "PaymentOrder",
+      "description": "Authoritative payment orders created server-side with Razorpay or tracked demo."
+    },
+    "/paymentWebhooks/{webhookId}": {
+      "schema": "PaymentWebhook",
+      "description": "Idempotent payment gateway webhook event log."
+    }
+  }
+}

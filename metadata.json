@@ -1,0 +1,6 @@
+{
+  "name": "Purohit Seva",
+  "description": "Find the Right Priest for Your Sacred Occasion - Premium priest and puja booking platform",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -25,7 +25,7 @@ export const reviewService = {
   getPriestReviews: async (priestId: string): Promise<Review[]> => {
     const reviews = await reviewService.getReviews();
     return reviews.filter(
-      r => r.priestId === priestId || priestId === 'pr-101' || r.priestId.toLowerCase() === priestId.toLowerCase()
+      r => r.priestId === priestId || r.priestId.toLowerCase() === priestId.toLowerCase()
     );
   },
 

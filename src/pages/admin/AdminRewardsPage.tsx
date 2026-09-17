@@ -267,12 +267,12 @@ export const AdminRewardsPage: React.FC = () => {
               {filteredCustomers.map((cust) => {
                 const prof = profiles[cust.id] || {
                   userId: cust.id,
-                  pointsBalance: 1250,
-                  lifetimePoints: 2500,
-                  completedBookings: 2,
+                  pointsBalance: 0,
+                  lifetimePoints: 0,
+                  completedBookings: 0,
                   loyaltyLevel: 'DEVOTEE' as LoyaltyLevel,
-                  referralCode: 'DEV-DEMO',
-                  totalReferrals: 2,
+                  referralCode: 'PS-' + (cust.id ? cust.id.slice(0, 5).toUpperCase() : 'MEMBER'),
+                  totalReferrals: 0,
                   updatedAt: new Date().toISOString()
                 };
 

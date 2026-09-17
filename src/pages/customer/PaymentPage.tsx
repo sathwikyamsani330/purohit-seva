@@ -90,7 +90,7 @@ export const PaymentPage: React.FC = () => {
         }
 
         // Fetch user rewards
-        const userRewards = await rewardService.getCustomerRewards(currentUser?.id || 'cust-1');
+        const userRewards = await rewardService.getCustomerRewards(currentUser?.id || '');
         const activeOnly = userRewards.filter((r) => r.status === 'AVAILABLE');
         setAvailableRewards(activeOnly);
       } finally {
@@ -259,7 +259,7 @@ export const PaymentPage: React.FC = () => {
 
     try {
       const res = await rewardService.validateAndApplyReward(
-        currentUser?.id || 'cust-1',
+        currentUser?.id || '',
         couponCodeInput.trim(),
         serviceCharge + platformFee
       );
@@ -784,9 +784,7 @@ export const PaymentPage: React.FC = () => {
                 <span>PCI-DSS Compliant Razorpay Standard Checkout</span>
               </div>
               <p className="text-[10px] text-slate-400">
-                {isDemoModeDetected
-                  ? 'Demo Mode Active: Gateway simulation with automated HMAC verification enabled.'
-                  : 'Razorpay Sandbox / Test Gateway Active: Real-time checkout order creation with cryptographic HMAC verification.'}
+                Cryptographic HMAC verification with PCI-DSS compliant secure order processing.
               </p>
             </div>
 

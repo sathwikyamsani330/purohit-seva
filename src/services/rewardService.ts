@@ -170,66 +170,6 @@ export const MILESTONE_BENEFITS = {
   }
 };
 
-// Seed initial demo customer rewards
-const INITIAL_DEMO_REWARDS: CustomerReward[] = [
-  {
-    id: 'reward-demo-1',
-    userId: 'cust-1',
-    rewardType: 'DISCOUNT',
-    tierId: 'tier-1',
-    title: '₹500 OFF Sacred Ceremony',
-    pointsCost: 1000,
-    discountAmount: 500,
-    minBookingAmount: 2000,
-    status: 'AVAILABLE',
-    rewardCode: 'PSR-8F29K1',
-    createdAt: new Date(Date.now() - 5 * 86400000).toISOString(),
-    expiresAt: new Date(Date.now() + 85 * 86400000).toISOString(),
-    usedAt: null,
-    bookingId: null
-  }
-];
-
-// Seed initial demo transactions
-const INITIAL_DEMO_TRANSACTIONS: RewardTransaction[] = [
-  {
-    id: 'tx-demo-1',
-    userId: 'cust-1',
-    type: 'EARN',
-    points: 750,
-    bookingId: 'PS-20260830-101',
-    description: 'Completed Satyanarayana Vratam booking',
-    createdAt: new Date(Date.now() - 6 * 86400000).toISOString()
-  },
-  {
-    id: 'tx-demo-2',
-    userId: 'cust-1',
-    type: 'EARN',
-    points: 500,
-    bookingId: 'PS-20260825-089',
-    description: 'Completed Ganesh Puja booking',
-    createdAt: new Date(Date.now() - 15 * 86400000).toISOString()
-  },
-  {
-    id: 'tx-demo-3',
-    userId: 'cust-1',
-    type: 'REDEEM',
-    points: -1000,
-    rewardId: 'reward-demo-1',
-    description: 'Redeemed ₹500 OFF Sacred Ceremony voucher (PSR-8F29K1)',
-    createdAt: new Date(Date.now() - 5 * 86400000).toISOString()
-  },
-  {
-    id: 'tx-demo-4',
-    userId: 'cust-1',
-    type: 'EARN',
-    points: 500,
-    bookingId: 'PS-20260810-044',
-    description: 'Completed Navagraha Shanti Homa booking',
-    createdAt: new Date(Date.now() - 25 * 86400000).toISOString()
-  }
-];
-
 export const calculateLoyaltyLevel = (lifetimePoints: number): LoyaltyLevel => {
   if (lifetimePoints >= 5000) return 'PUROHIT_SEVA_ELITE';
   if (lifetimePoints >= 2500) return 'SEVA_PLUS';
@@ -274,8 +214,8 @@ export const rewardService = {
   },
 
   // 2. Get customer rewards profile
-  getRewardsProfile: async (userId: string = 'cust-1'): Promise<UserRewardsProfile> => {
-    const cleanUserId = userId || 'cust-1';
+  getRewardsProfile: async (userId: string = ''): Promise<UserRewardsProfile> => {
+    const cleanUserId = userId || '';
 
     // Try Firestore
     if (auth.currentUser && auth.currentUser.uid === cleanUserId) {
@@ -321,12 +261,12 @@ export const rewardService = {
     // Default initial profile
     const defaultProfile: UserRewardsProfile = {
       userId: cleanUserId,
-      pointsBalance: cleanUserId === 'cust-1' ? 750 : 0,
-      lifetimePoints: cleanUserId === 'cust-1' ? 1750 : 0,
-      completedBookings: cleanUserId === 'cust-1' ? 3 : 0,
-      loyaltyLevel: cleanUserId === 'cust-1' ? 'SEVA_MEMBER' : 'DEVOTEE',
+      pointsBalance: 0,
+      lifetimePoints: 0,
+      completedBookings: 0,
+      loyaltyLevel: 'DEVOTEE',
       referralCode: `PS-${cleanUserId.slice(0, 5).toUpperCase()}`,
-      totalReferrals: cleanUserId === 'cust-1' ? 1 : 0,
+      totalReferrals: 0,
       updatedAt: new Date().toISOString()
     };
 
@@ -386,8 +326,8 @@ export const rewardService = {
   },
 
   // 4. Get customer points transaction history
-  getRewardTransactions: async (userId: string = 'cust-1'): Promise<RewardTransaction[]> => {
-    const cleanUserId = userId || 'cust-1';
+  getRewardTransactions: async (userId: string = ''): Promise<RewardTransaction[]> => {
+    const cleanUserId = userId || '';
 
     // Firestore attempt
     if (auth.currentUser) {
@@ -417,10 +357,7 @@ export const rewardService = {
       }
     }
 
-    if (allTx.length === 0) {
-      allTx = INITIAL_DEMO_TRANSACTIONS;
-      localStorage.setItem(REWARD_TRANSACTIONS_KEY, JSON.stringify(INITIAL_DEMO_TRANSACTIONS));
-    }
+    
 
     if (!cleanUserId || cleanUserId === 'all' || cleanUserId === 'admin') {
       return allTx.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
@@ -432,8 +369,8 @@ export const rewardService = {
   },
 
   // 5. Get customer redeemed reward vouchers (My Rewards)
-  getCustomerRewards: async (userId: string = 'cust-1'): Promise<CustomerReward[]> => {
-    const cleanUserId = userId || 'cust-1';
+  getCustomerRewards: async (userId: string = ''): Promise<CustomerReward[]> => {
+    const cleanUserId = userId || '';
 
     // Check expiry dynamically
     const nowIso = new Date().toISOString();
@@ -471,10 +408,7 @@ export const rewardService = {
       }
     }
 
-    if (allRewards.length === 0) {
-      allRewards = INITIAL_DEMO_REWARDS;
-      localStorage.setItem(CUSTOMER_REWARDS_KEY, JSON.stringify(INITIAL_DEMO_REWARDS));
-    }
+    
 
     const userRewards = (cleanUserId === 'all' || cleanUserId === 'admin')
       ? allRewards
@@ -492,7 +426,7 @@ export const rewardService = {
   },
 
   // 6. Redeem Reward Tier (Points -> Voucher Coupon)
-  redeemReward: async (userId: string = 'cust-1', tierId: string): Promise<CustomerReward> => {
+  redeemReward: async (userId: string = '', tierId: string): Promise<CustomerReward> => {
     const config = await rewardService.getRewardsConfig();
     const tier = config.tiers.find((t) => t.id === tierId && t.isActive);
     if (!tier) {
@@ -641,7 +575,7 @@ export const rewardService = {
     const spentAmount = booking.totalAmount || booking.servicePrice || 0;
     const pointsEarned = Math.max(1, Math.floor(spentAmount / config.earningRateRupeesPerPoint));
 
-    const userId = booking.customerId || 'cust-1';
+    const userId = booking.customerId || '';
     const profile = await rewardService.getRewardsProfile(userId);
 
     const oldLevel = profile.loyaltyLevel;

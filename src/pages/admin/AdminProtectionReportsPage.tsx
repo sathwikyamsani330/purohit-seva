@@ -79,7 +79,7 @@ export const AdminProtectionReportsPage: React.FC = () => {
         resolutionStatus,
         {
           adminNotes,
-          resolvedBy: currentUser?.email || 'admin@purohitseva.in'
+          resolvedBy: currentUser?.email || 'Platform Administrator'
         }
       );
       success(`Report #${selectedReport.id} marked as ${resolutionStatus}.`);
@@ -103,7 +103,7 @@ export const AdminProtectionReportsPage: React.FC = () => {
         bookingId: selectedReport.bookingId,
         violationType: String(selectedReport.category),
         severity: violationSeverity,
-        resolvedBy: currentUser?.email || 'admin@purohitseva.in',
+        resolvedBy: currentUser?.email || 'Platform Administrator',
         notes: warningNotes || `Actioned under incident report #${selectedReport.id}`
       });
 
@@ -114,7 +114,7 @@ export const AdminProtectionReportsPage: React.FC = () => {
         {
           adminNotes: `Formal violation recorded (${violationSeverity}). Notes: ${warningNotes}`,
           actionTaken: 'WARNING_ISSUED',
-          resolvedBy: currentUser?.email || 'admin@purohitseva.in'
+          resolvedBy: currentUser?.email || 'Platform Administrator'
         }
       );
 

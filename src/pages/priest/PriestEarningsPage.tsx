@@ -26,18 +26,18 @@ export const PriestEarningsPage: React.FC = () => {
 
   // Bank Info State
   const [bankInfo, setBankInfo] = useState({
-    accountName: 'Pandit Raghavendra Sharma',
-    accountNumber: '••••••••8901',
-    ifsc: 'HDFC0001234',
-    upiId: 'raghavendra.sharma@okhdfcbank'
+    accountName: currentUser?.name || '',
+    accountNumber: '',
+    ifsc: '',
+    upiId: ''
   });
 
   useEffect(() => {
     const load = async () => {
       setLoading(true);
       try {
-        const priestId = currentUser?.id || 'priest-1';
-        const data = await bookingService.getPriestBookings(priestId);
+        const priestId = currentUser?.id || '';
+        const data = priestId ? await bookingService.getPriestBookings(priestId) : [];
         setBookings(data);
       } finally {
         setLoading(false);

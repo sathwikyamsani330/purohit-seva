@@ -7,7 +7,6 @@ import {
   BookingSupportRequest,
   SupportIssueReason
 } from '../types';
-import { MOCK_BOOKINGS } from '../data/mockData';
 import { notificationService } from './notificationService';
 import { rewardService } from './rewardService';
 import { db, auth, handleFirestoreError, OperationType } from '../lib/firebase';
@@ -123,8 +122,7 @@ export const bookingService = {
       }
     }
     // Seed localStorage with mock bookings if empty
-    localStorage.setItem(BOOKINGS_STORAGE_KEY, JSON.stringify(MOCK_BOOKINGS));
-    return MOCK_BOOKINGS;
+    return [];
   },
 
   getAllBookings: async (): Promise<Booking[]> => {
@@ -156,11 +154,7 @@ export const bookingService = {
       const isAdmin = currentAppUser?.role === 'admin';
       if (!isAdmin) {
         const uid = auth.currentUser.uid;
-        const isAuthorized = found.customerId === uid || found.priestId === uid ||
-          ((uid === 'cust-1' || uid === 'customer-001') && (found.customerId === 'cust-1' || found.customerId === 'customer-001')) ||
-          ((uid === 'cust-2' || uid === 'customer-002') && (found.customerId === 'cust-2' || found.customerId === 'customer-002')) ||
-          ((uid === 'pr-101' || uid === 'priest-001' || uid === 'priest-1') && (found.priestId === 'pr-101' || found.priestId === 'priest-001' || found.priestId === 'priest-1')) ||
-          ((uid === 'pr-102' || uid === 'priest-002' || uid === 'priest-2') && (found.priestId === 'pr-102' || found.priestId === 'priest-002' || found.priestId === 'priest-2'));
+        const isAuthorized = found.customerId === uid || found.priestId === uid;
         if (!isAuthorized) {
           return null;
         }
@@ -235,18 +229,7 @@ export const bookingService = {
 
   getCustomerBookings: async (customerId: string, statusTab?: 'upcoming' | 'completed' | 'cancelled'): Promise<Booking[]> => {
     const bookings = await bookingService.getBookings('customer', customerId);
-    const customerList = bookings.filter(b => {
-      if (b.customerId === customerId) return true;
-      if ((customerId === 'cust-1' || customerId === 'customer-001') &&
-          (b.customerId === 'cust-1' || b.customerId === 'customer-001' || b.customerEmail === 'suresh.nair@example.com' || b.customerEmail === 'suresh.kumar@example.com')) {
-        return true;
-      }
-      if ((customerId === 'cust-2' || customerId === 'customer-002') &&
-          (b.customerId === 'cust-2' || b.customerId === 'customer-002' || b.customerEmail === 'ananya.reddy@example.com' || b.customerEmail === 'ananya.d@example.com')) {
-        return true;
-      }
-      return false;
-    });
+    const customerList = bookings.filter(b => b.customerId === customerId);
     
     if (!statusTab) return customerList;
 
@@ -264,18 +247,7 @@ export const bookingService = {
 
   getPriestBookings: async (priestId: string, statusTab?: 'upcoming' | 'completed' | 'cancelled' | 'pending'): Promise<Booking[]> => {
     const bookings = await bookingService.getBookings('priest', priestId);
-    const priestList = bookings.filter(b => {
-      if (b.priestId === priestId) return true;
-      if ((priestId === 'pr-101' || priestId === 'priest-001' || priestId === 'priest-1') &&
-          (b.priestId === 'pr-101' || b.priestId === 'priest-001' || b.priestId === 'priest-1')) {
-        return true;
-      }
-      if ((priestId === 'pr-102' || priestId === 'priest-002' || priestId === 'priest-2') &&
-          (b.priestId === 'pr-102' || b.priestId === 'priest-002' || b.priestId === 'priest-2')) {
-        return true;
-      }
-      return false;
-    });
+    const priestList = bookings.filter(b => b.priestId === priestId);
 
     if (!statusTab) return priestList;
 
@@ -325,8 +297,8 @@ export const bookingService = {
     const locationString = sanitizeInputString(rawLocationString, 300);
 
     const sanitizedCustomerName = sanitizeInputString(bookingData.customerName, 80) || 'Devotee';
-    const sanitizedCustomerPhone = sanitizeInputString(bookingData.customerPhone, 25) || '+91 98451 22334';
-    const sanitizedCustomerEmail = sanitizeInputString(bookingData.customerEmail, 80) || 'suresh.nair@example.com';
+    const sanitizedCustomerPhone = sanitizeInputString(bookingData.customerPhone, 25) || '';
+    const sanitizedCustomerEmail = sanitizeInputString(bookingData.customerEmail, 80) || '';
     const rawNotes = (bookingData as any).notes || (bookingData as any).specialNotes || '';
     const sanitizedNotes = sanitizeInputString(rawNotes, 1000);
 
@@ -340,7 +312,7 @@ export const bookingService = {
       bookingId: uniqueId,
       oldStatus: 'PAYMENT_PENDING',
       newStatus: 'CONFIRMED',
-      changedBy: bookingData.customerId || auth.currentUser?.uid || 'cust-1',
+      changedBy: bookingData.customerId || auth.currentUser?.uid || '',
       changedByRole: 'CUSTOMER',
       changedByName: sanitizedCustomerName,
       reason: 'Dakshina advance payment verified & booking confirmed',
@@ -351,7 +323,7 @@ export const bookingService = {
       id: uniqueId,
       bookingId: uniqueId,
       requestId: bookingData.requestId,
-      customerId: bookingData.customerId || auth.currentUser?.uid || 'cust-1',
+      customerId: bookingData.customerId || auth.currentUser?.uid || '',
       customerName: sanitizedCustomerName,
       customerPhone: sanitizedCustomerPhone,
       customerEmail: sanitizedCustomerEmail,
@@ -361,7 +333,7 @@ export const bookingService = {
       priestImage: (bookingData as any).priestImage || bookingData.priestAvatar || 'https://images.unsplash.com/photo-1544005313-94ddf0286df2',
       priestTitle: (bookingData as any).priestTitle || 'Vedic Acharya',
       priestRating: (bookingData as any).priestRating || 4.9,
-      priestPhone: (bookingData as any).priestPhone || '+91 98450 11223',
+      priestPhone: (bookingData as any).priestPhone || '',
       eventId: bookingData.eventId || 'evt-1',
       eventName: bookingData.eventName || 'Gruhapravesham',
       serviceId: (bookingData as any).serviceId || 'srv-1',

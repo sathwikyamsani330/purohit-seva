@@ -40,9 +40,9 @@ export const PriestDashboardPage: React.FC = () => {
   const fetchPriestInfo = async () => {
     setLoading(true);
     try {
-      const priestId = currentUser?.id || 'pr-101';
+      const priestId = currentUser?.id || priest?.id || '';
       const [pData] = await Promise.all([
-        priestService.getPriestById(priestId),
+        priestId ? priestService.getPriestById(priestId) : Promise.resolve(null),
         refreshRequests(),
         refreshBookings()
       ]);
@@ -176,7 +176,7 @@ export const PriestDashboardPage: React.FC = () => {
 
       {/* Priest Platform Protection & Privileges Panel */}
       <PriestProtectionPanel
-        priestId={currentUser?.id || priest?.id || 'pr-101'}
+        priestId={currentUser?.id || priest?.id || ''}
         priestName={currentUser?.name || priest?.name || 'Pandit ji'}
       />
 

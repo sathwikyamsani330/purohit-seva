@@ -101,7 +101,7 @@ export const CeremonyPlannerPage: React.FC = () => {
 
   const loadUserPlans = async () => {
     try {
-      const plans = await ceremonyPlanService.getPlans(currentUser?.id || 'cust-1');
+      const plans = await ceremonyPlanService.getPlans(currentUser?.id || '');
       setSavedPlans(plans);
     } catch (e) {
       console.warn('Could not load user plans', e);
@@ -174,7 +174,7 @@ export const CeremonyPlannerPage: React.FC = () => {
         specialRequirements: specialReqInput
       };
 
-      const plan = await ceremonyPlanService.generateAIPlan(input, currentUser?.id || 'cust-1');
+      const plan = await ceremonyPlanService.generateAIPlan(input, currentUser?.id || '');
       setGenerationStep('Finalizing readiness milestones...');
       const saved = await ceremonyPlanService.savePlan(plan);
 
@@ -299,10 +299,10 @@ export const CeremonyPlannerPage: React.FC = () => {
 
     // Set BookingDraft in Context
     setDraft({
-      customerId: currentUser?.id || 'cust-1',
+      customerId: currentUser?.id || '',
       customerName: currentUser?.name || 'Devotee',
       customerEmail: currentUser?.email,
-      customerPhone: currentUser?.phone || '9876543210',
+      customerPhone: currentUser?.phone || '',
       priestId: 'pr-101', // Default top Acharya or selected
       priestName: 'Acharya Vidyadhar Shastri',
       priestTitle: 'Veda Murti & Rigveda Acharya',

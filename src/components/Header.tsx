@@ -34,7 +34,7 @@ export const Header: React.FC = () => {
   useEffect(() => {
     const fetchUnread = async () => {
       try {
-        const count = await notificationService.getUnreadCount(currentUser?.id || 'cust-1');
+        const count = await notificationService.getUnreadCount(currentUser?.id || '');
         setUnreadCount(count);
       } catch {
         // ignore

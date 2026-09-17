@@ -28,7 +28,6 @@ interface AuthContextType {
   }) => Promise<User>;
   logout: () => Promise<void>;
   updateProfile: (updated: Partial<CustomerProfile>) => Promise<void>;
-  switchUserRole: (role: UserRole) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -50,18 +49,22 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
               id: fbUser.uid,
               name: data.name || fbUser.displayName || 'Devotee',
               email: data.email || fbUser.email || '',
-              phone: data.phone || fbUser.phoneNumber || '+91 98450 11223',
+              phone: data.phone || fbUser.phoneNumber || '',
               role: (data.role as UserRole) || 'customer',
               avatarUrl: data.avatarUrl || fbUser.photoURL || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80',
-              city: data.city || 'Bengaluru',
+              city: data.city || '',
               createdAt: data.createdAt || new Date().toISOString()
             };
             setCurrentUser(u);
             authService.setCurrentUser(u);
           }
         } catch (err) {
-          // If error occurs, keep cached user
           handleFirestoreError(err, OperationType.GET, `users/${fbUser.uid}`);
+        }
+      } else {
+        // If logged out from Firebase, clear current user
+        if (!authService.getCurrentUser()) {
+          setCurrentUser(null);
         }
       }
       setIsLoading(false);
@@ -132,16 +135,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     setCurrentUser(updatedUser);
   };
 
-  const switchUserRole = async (targetRole: UserRole) => {
-    if (targetRole === 'customer') {
-      await loginCustomer('suresh.nair@example.com');
-    } else if (targetRole === 'priest') {
-      await loginPriest('raghavendra.sharma@purohitseva.in');
-    } else if (targetRole === 'admin') {
-      await loginAdmin('admin@purohitseva.in');
-    }
-  };
-
   return (
     <AuthContext.Provider
       value={{
@@ -156,8 +149,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         registerCustomer,
         registerPriest,
         logout,
-        updateProfile,
-        switchUserRole
+        updateProfile
       }}
     >
       {children}

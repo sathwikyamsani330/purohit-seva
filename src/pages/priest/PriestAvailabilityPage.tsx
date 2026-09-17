@@ -73,7 +73,7 @@ export const PriestAvailabilityPage: React.FC = () => {
 
         // Filter bookings for this priest
         const priestBookings = bookings.filter(b => 
-          (b.priestId === priestId || priestId === 'pr-101' || priestId === 'priest-1') &&
+          b.priestId === priestId &&
           (b.bookingStatus === 'CONFIRMED' || b.status === 'confirmed')
         );
         setConfirmedBookings(priestBookings);

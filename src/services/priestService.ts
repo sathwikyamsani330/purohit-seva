@@ -393,7 +393,7 @@ export const priestService = {
 
     // Active confirmed bookings
     const confirmedBookingsForDate = allBookings.filter(b => {
-      const isSamePriest = b.priestId === priestId || priestId === 'pr-101' || priestId === 'priest-1';
+      const isSamePriest = b.priestId === priestId;
       const isConfirmed = b.bookingStatus === 'CONFIRMED' || b.status === 'confirmed';
       const isSameDate = (b.date || '').trim() === normalizedDate;
       return isSamePriest && isConfirmed && isSameDate;
@@ -401,7 +401,7 @@ export const priestService = {
 
     // Active accepted requests awaiting payment
     const acceptedRequestsForDate = allRequests.filter(r => {
-      const isSamePriest = r.priestId === priestId || priestId === 'pr-101' || priestId === 'priest-1';
+      const isSamePriest = r.priestId === priestId;
       const isLocked = r.status === 'ACCEPTED' || r.status === 'PAYMENT_PENDING';
       const isSameDate = (r.date || '').trim() === normalizedDate;
       return isSamePriest && isLocked && isSameDate;

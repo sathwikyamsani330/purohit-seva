@@ -175,39 +175,15 @@ export const PRIEST_BENEFITS = [
   }
 ];
 
-// Helper to seed initial sample reports if storage is empty
-const INITIAL_REPORTS: Report[] = [
-  {
-    id: 'REP-20260901-001',
-    bookingId: 'PS-20260830-101',
-    reporterId: 'cust-1',
-    reporterName: 'Sathwik Yamsani',
-    reporterEmail: 'sathwikyamsani330@gmail.com',
-    reportedUserId: 'pr-101',
-    reportedUserName: 'Sri Ramesh Sharma',
-    reporterRole: 'customer',
-    category: 'PRIEST_ASKED_DIRECT_PAY',
-    categoryLabel: 'Priest asked me to pay directly',
-    description: 'During a prior inquiry, priest mentioned direct Google Pay would be easier. Resolved through clarification.',
-    status: 'RESOLVED',
-    createdAt: new Date(Date.now() - 86400000 * 3).toISOString(),
-    resolvedAt: new Date(Date.now() - 86400000 * 2).toISOString(),
-    resolvedBy: 'admin@purohitseva.in',
-    adminNotes: 'Contacted priest and reiterated platform policy. Priest acknowledged and updated procedure.',
-    actionTaken: 'WARNING_ISSUED'
-  }
-];
-
 function getStoredReports(): Report[] {
   try {
     const raw = localStorage.getItem(REPORTS_STORAGE_KEY);
     if (!raw) {
-      localStorage.setItem(REPORTS_STORAGE_KEY, JSON.stringify(INITIAL_REPORTS));
-      return INITIAL_REPORTS;
+      return [];
     }
     return JSON.parse(raw);
   } catch {
-    return INITIAL_REPORTS;
+    return [];
   }
 }
 
@@ -410,7 +386,7 @@ export const protectionService = {
       status,
       adminNotes: options?.adminNotes !== undefined ? options.adminNotes : all[idx].adminNotes,
       actionTaken: options?.actionTaken !== undefined ? options.actionTaken : all[idx].actionTaken,
-      resolvedBy: options?.resolvedBy || 'admin@purohitseva.in',
+      resolvedBy: options?.resolvedBy || 'Platform Administrator',
       resolvedAt: status === 'RESOLVED' || status === 'DISMISSED' ? new Date().toISOString() : all[idx].resolvedAt
     };
 

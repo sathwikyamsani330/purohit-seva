@@ -46,7 +46,7 @@ const persistProcessedKey = (key: string) => {
 };
 
 export const DEFAULT_PREFERENCES: NotificationPreferences = {
-  userId: 'cust-1',
+  userId: '',
   promotional: true,
   rewards: true,
   generalUpdates: true,
@@ -59,145 +59,7 @@ export const DEFAULT_PREFERENCES: NotificationPreferences = {
   email: true
 };
 
-const INITIAL_NOTIFICATIONS: AppNotification[] = [
-  {
-    id: 'notif-1',
-    userId: 'cust-1',
-    targetRole: 'customer',
-    title: 'Welcome to Purohit Seva',
-    message: 'Request authentic Vedic priests for your auspicious ceremonies with transparent muhurthams and verified samagri.',
-    type: 'BOOKING_CONFIRMED',
-    category: 'SYSTEM',
-    priority: 'normal',
-    link: '/services',
-    read: true,
-    createdAt: new Date(Date.now() - 86400000 * 2).toISOString()
-  },
-  {
-    id: 'notif-2',
-    userId: 'cust-1',
-    targetRole: 'customer',
-    title: 'Priest Accepted: Gruhapravesham',
-    message: 'Sri Ramesh Sharma has accepted your request for Gruhapravesham. Payment is required to confirm your booking.',
-    type: 'REQUEST_ACCEPTED',
-    category: 'BOOKING',
-    priority: 'high',
-    requestId: 'REQ-20260830-1042',
-    link: '/payment/REQ-20260830-1042',
-    read: false,
-    createdAt: new Date(Date.now() - 3600000 * 2).toISOString()
-  },
-  {
-    id: 'notif-3',
-    userId: 'cust-1',
-    targetRole: 'customer',
-    title: 'Puja Confirmed: Satyanarayana Vratam',
-    message: 'Booking PS-20260830-101 is confirmed with Sri Ramesh Sharma. You can now coordinate with the priest.',
-    type: 'BOOKING_CONFIRMED',
-    category: 'BOOKING',
-    priority: 'high',
-    bookingId: 'PS-20260830-101',
-    link: '/bookings/PS-20260830-101',
-    read: false,
-    createdAt: new Date(Date.now() - 3600000 * 4).toISOString()
-  },
-  {
-    id: 'notif-4',
-    userId: 'cust-1',
-    targetRole: 'customer',
-    title: '🌟 350 Devotee Points Credited',
-    message: 'You earned 350 Vedic Punya points for completing your Satyanarayana Vratam ceremony. Redeem for discounts on future rituals!',
-    type: 'POINTS_EARNED',
-    category: 'REWARDS',
-    priority: 'normal',
-    link: '/loyalty',
-    read: false,
-    createdAt: new Date(Date.now() - 3600000 * 6).toISOString()
-  },
-  {
-    id: 'notif-5',
-    userId: 'cust-1',
-    targetRole: 'customer',
-    title: 'Escrow Protection Active',
-    message: 'Your dakshina is securely held in 100% Escrow Protection until the ceremony concludes and you confirm completion.',
-    type: 'SYSTEM_ALERT',
-    category: 'SECURITY',
-    priority: 'normal',
-    link: '/bookings/PS-20260830-101',
-    read: true,
-    createdAt: new Date(Date.now() - 3600000 * 12).toISOString()
-  },
-  // Priest Notifications
-  {
-    id: 'notif-pr-1',
-    userId: 'pr-101',
-    targetRole: 'priest',
-    title: 'New Puja Request: Gruhapravesham',
-    message: 'Suresh Nair has requested you for Gruhapravesham on 15 September 2026 at 10:00 AM.',
-    type: 'PRIEST_NEW_REQUEST',
-    category: 'BOOKING',
-    priority: 'urgent',
-    requestId: 'REQ-20260830-2091',
-    link: '/priest/bookings',
-    read: false,
-    createdAt: new Date(Date.now() - 3600000 * 1).toISOString()
-  },
-  {
-    id: 'notif-pr-2',
-    userId: 'pr-101',
-    targetRole: 'priest',
-    title: 'Customer Dakshina Deposited into Escrow',
-    message: 'Customer has completed payment of ₹3,500 for Ganapati Homa. Ceremony is locked and scheduled.',
-    type: 'PRIEST_PAYMENT_RECEIVED',
-    category: 'PAYMENT',
-    priority: 'high',
-    bookingId: 'PS-20260830-101',
-    link: '/priest/bookings',
-    read: false,
-    createdAt: new Date(Date.now() - 3600000 * 3).toISOString()
-  },
-  {
-    id: 'notif-pr-3',
-    userId: 'pr-101',
-    targetRole: 'priest',
-    title: '5-Star Review Received!',
-    message: 'Anita Desai gave you 5 stars: "Very knowledgeable pandit ji, guided our family peacefully through the entire sankalpam."',
-    type: 'PRIEST_REVIEW_RECEIVED',
-    category: 'REVIEW',
-    priority: 'normal',
-    link: '/priest/profile',
-    read: true,
-    createdAt: new Date(Date.now() - 3600000 * 24).toISOString()
-  },
-  // Admin Operational Notifications
-  {
-    id: 'notif-adm-1',
-    userId: 'admin',
-    targetRole: 'admin',
-    title: 'New Priest Verification Application',
-    message: 'Acharya Venkata Krishna (Vedic Scholar, Mysore) has submitted credentials for Acharya verification.',
-    type: 'ADMIN_PRIEST_APPLICATION',
-    category: 'SYSTEM',
-    priority: 'high',
-    link: '/admin/priests',
-    read: false,
-    createdAt: new Date(Date.now() - 3600000 * 2).toISOString()
-  },
-  {
-    id: 'notif-adm-2',
-    userId: 'admin',
-    targetRole: 'admin',
-    title: 'Purohit Seva Protection Report Filed',
-    message: 'Incident REP-20260904-4821 filed regarding off-platform direct payment solicitation. Integrity review required.',
-    type: 'ADMIN_PROTECTION_REPORT',
-    category: 'SECURITY',
-    priority: 'urgent',
-    reportId: 'REP-20260904-4821',
-    link: '/admin/protection',
-    read: false,
-    createdAt: new Date(Date.now() - 3600000 * 5).toISOString()
-  }
-];
+const INITIAL_NOTIFICATIONS: AppNotification[] = [];
 
 /**
  * Automatically determine category based on notification type if not explicitly provided
@@ -255,7 +117,7 @@ export const notificationService = {
   /**
    * Get user notification preferences
    */
-  getPreferences: async (userId: string = 'cust-1'): Promise<NotificationPreferences> => {
+  getPreferences: async (userId: string = ''): Promise<NotificationPreferences> => {
     try {
       const stored = localStorage.getItem(`${PREFERENCES_STORAGE_KEY}_${userId}`);
       if (stored) {
@@ -297,7 +159,7 @@ export const notificationService = {
    * Retrieve notifications for a user/role with offline-first localStorage fallback
    */
   getNotifications: async (userId?: string, role?: 'customer' | 'priest' | 'admin' | string): Promise<AppNotification[]> => {
-    const effectiveUserId = userId || (role === 'admin' ? 'admin' : role === 'priest' ? 'pr-101' : 'cust-1');
+    const effectiveUserId = userId || (role === 'admin' ? 'admin' : '');
 
     if (auth.currentUser) {
       try {
@@ -346,10 +208,7 @@ export const notificationService = {
       }
     }
 
-    if (list.length === 0) {
-      list = INITIAL_NOTIFICATIONS;
-      localStorage.setItem(NOTIFICATIONS_STORAGE_KEY, JSON.stringify(INITIAL_NOTIFICATIONS));
-    }
+    
 
     return list
       .map(n => ({
@@ -368,9 +227,9 @@ export const notificationService = {
       return notif.userId === 'admin' || notif.targetRole === 'admin';
     }
     if (role === 'priest' || userId.startsWith('pr-')) {
-      return notif.userId === userId || notif.userId === 'pr-101' || notif.targetRole === 'priest';
+      return notif.userId === userId || notif.targetRole === 'priest';
     }
-    return notif.userId === userId || notif.userId === 'cust-1' || !notif.userId;
+    return notif.userId === userId || !notif.userId;
   },
 
   /**
@@ -385,7 +244,7 @@ export const notificationService = {
       idempotencyKey?: string;
     }
   ): Promise<AppNotification | null> => {
-    const targetUserId = notif.userId || 'cust-1';
+    const targetUserId = notif.userId || '';
     const category = resolveCategory(notif.type, notif.category);
 
     // 1. Check user preferences for non-critical categories

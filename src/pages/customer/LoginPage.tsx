@@ -4,7 +4,7 @@ import { useAuth } from '../../context/AuthContext';
 import { useToast } from '../../context/ToastContext';
 import { Input } from '../../components/Input';
 import { Button } from '../../components/Button';
-import { Flame, Mail, Lock, ShieldAlert, Sparkles } from 'lucide-react';
+import { Flame, Mail, Lock, ShieldAlert } from 'lucide-react';
 
 export const LoginPage: React.FC = () => {
   const { loginCustomer, loginWithGoogle, currentUser } = useAuth();
@@ -57,11 +57,6 @@ export const LoginPage: React.FC = () => {
     } finally {
       setIsGoogleLoading(false);
     }
-  };
-
-  const handleFillDemoCustomer = () => {
-    setEmail('suresh.nair@example.com');
-    setPassword('customer123');
   };
 
   return (
@@ -178,17 +173,6 @@ export const LoginPage: React.FC = () => {
             </Button>
           </div>
         </form>
-
-        <div className="mt-4 pt-3 border-t border-stone-200 text-center">
-          <button
-            type="button"
-            onClick={handleFillDemoCustomer}
-            className="inline-flex items-center gap-1.5 text-xs text-amber-700 hover:text-amber-800 font-medium cursor-pointer transition"
-          >
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>Use Demo Customer (suresh.nair@example.com)</span>
-          </button>
-        </div>
 
         {/* Create Account Link */}
         <div className="mt-6 text-center text-xs text-stone-600">

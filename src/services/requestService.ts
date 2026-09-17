@@ -18,132 +18,6 @@ export const generateRequestId = (): string => {
   return `REQ-${dateStr}-${randomSuffix}`;
 };
 
-const INITIAL_MOCK_REQUESTS: PriestRequest[] = [
-  {
-    id: 'REQ-20260830-1042',
-    requestId: 'REQ-20260830-1042',
-    customerId: 'cust-1',
-    customerName: 'Suresh Nair',
-    customerPhone: '+91 98451 22334',
-    customerEmail: 'suresh.nair@example.com',
-    priestId: 'pr-101',
-    priestName: 'Sri Ramesh Sharma',
-    priestAvatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=80',
-    priestImage: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=80',
-    priestTitle: 'Senior Rigvedic Acharya',
-    priestRating: 4.9,
-    priestPhone: '+91 98450 11223',
-    eventId: 'evt-1',
-    eventName: 'Gruhapravesham',
-    serviceId: 'srv-1',
-    serviceName: 'Comprehensive Gruhapravesham & Vastu Homa',
-    date: '2026-09-08',
-    time: '06:30 AM',
-    timeSlot: '06:30 AM',
-    location: 'Flat 402, Shanti Nilayam Apartments, Indiranagar 12th Main, Bengaluru - 560038',
-    address: {
-      houseNumber: 'Flat 402',
-      street: 'Shanti Nilayam Apartments',
-      area: 'Indiranagar 12th Main',
-      city: 'Bengaluru',
-      state: 'Karnataka',
-      pincode: '560038'
-    },
-    notes: 'Kashyapa Gotra. Please bring complete Homa Kundam and dry coconut offerings.',
-    specialNotes: 'Kashyapa Gotra. Please bring complete Homa Kundam and dry coconut offerings.',
-    includeSamagri: true,
-    servicePrice: 6500,
-    platformFee: 250,
-    totalAmount: 6750,
-    status: 'ACCEPTED',
-    createdAt: new Date(Date.now() - 3600000 * 4).toISOString(),
-    updatedAt: new Date(Date.now() - 3600000 * 2).toISOString(),
-    respondedAt: new Date(Date.now() - 3600000 * 2).toISOString()
-  },
-  {
-    id: 'REQ-20260830-2091',
-    requestId: 'REQ-20260830-2091',
-    customerId: 'cust-1',
-    customerName: 'Suresh Nair',
-    customerPhone: '+91 98451 22334',
-    customerEmail: 'suresh.nair@example.com',
-    priestId: 'pr-101',
-    priestName: 'Sri Ramesh Sharma',
-    priestAvatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=80',
-    priestImage: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=80',
-    priestTitle: 'Senior Rigvedic Acharya',
-    priestRating: 4.9,
-    priestPhone: '+91 98450 11223',
-    eventId: 'evt-3',
-    eventName: 'Sri Satyanarayana Swamy Vratam',
-    serviceId: 'srv-2',
-    serviceName: 'Satyanarayana Swamy Vratam & Katha',
-    date: '2026-09-12',
-    time: '09:00 AM',
-    timeSlot: '09:00 AM',
-    location: 'Villa 18, Palm Meadows, Whitefield, Bengaluru - 560066',
-    address: {
-      houseNumber: 'Villa 18',
-      street: 'Palm Meadows',
-      area: 'Whitefield',
-      city: 'Bengaluru',
-      state: 'Karnataka',
-      pincode: '560066'
-    },
-    notes: 'Bharadwaja Gotra. Please recite Katha in Telugu & Sanskrit.',
-    specialNotes: 'Bharadwaja Gotra. Please recite Katha in Telugu & Sanskrit.',
-    includeSamagri: true,
-    servicePrice: 4200,
-    platformFee: 250,
-    totalAmount: 4450,
-    status: 'PENDING',
-    createdAt: new Date(Date.now() - 3600000 * 2).toISOString(),
-    updatedAt: new Date(Date.now() - 3600000 * 2).toISOString()
-  },
-  {
-    id: 'REQ-20260828-5512',
-    requestId: 'REQ-20260828-5512',
-    customerId: 'cust-1',
-    customerName: 'Suresh Nair',
-    customerPhone: '+91 98451 22334',
-    customerEmail: 'suresh.nair@example.com',
-    priestId: 'pr-104',
-    priestName: 'Pandit Rameshwar Mishra',
-    priestAvatar: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=400&q=80',
-    priestImage: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=400&q=80',
-    priestTitle: 'Yajurveda Vidwan',
-    priestRating: 4.8,
-    priestPhone: '+91 98110 55667',
-    eventId: 'evt-4',
-    eventName: 'Ganapathi Puja & Homa',
-    serviceId: 'srv-12',
-    serviceName: 'Maha Ganapathi Homa',
-    date: '2026-08-29',
-    time: '05:30 AM',
-    timeSlot: '05:30 AM',
-    location: 'Sector 15, Gurgaon, Delhi NCR - 122001',
-    address: {
-      houseNumber: 'Plot 44',
-      street: 'Sector 15',
-      area: 'Near Civil Lines',
-      city: 'Delhi NCR',
-      state: 'Delhi',
-      pincode: '122001'
-    },
-    notes: 'Urgent early morning slot for shop opening.',
-    includeSamagri: false,
-    servicePrice: 3800,
-    platformFee: 250,
-    totalAmount: 4050,
-    status: 'REJECTED',
-    rejectionReason: 'Timing unavailable',
-    rejectionNotes: 'Already committed to an ancestral Shradha ritual at this early dawn muhurtham.',
-    createdAt: new Date(Date.now() - 86400000 * 2).toISOString(),
-    updatedAt: new Date(Date.now() - 86400000 * 1.5).toISOString(),
-    respondedAt: new Date(Date.now() - 86400000 * 1.5).toISOString()
-  }
-];
-
 export const requestService = {
   // Get all requests aligned with least-privilege Firestore rules or localStorage fallback
   getRequests: async (userRole?: string, targetUserId?: string): Promise<PriestRequest[]> => {
@@ -198,8 +72,7 @@ export const requestService = {
         // fallback
       }
     }
-    localStorage.setItem(REQUESTS_STORAGE_KEY, JSON.stringify(INITIAL_MOCK_REQUESTS));
-    return INITIAL_MOCK_REQUESTS;
+    return [];
   },
 
   getAllRequests: async (): Promise<PriestRequest[]> => {
@@ -231,11 +104,7 @@ export const requestService = {
       const isAdmin = currentAppUser?.role === 'admin';
       if (!isAdmin) {
         const uid = auth.currentUser.uid;
-        const isAuthorized = found.customerId === uid || found.priestId === uid ||
-          ((uid === 'cust-1' || uid === 'customer-001') && (found.customerId === 'cust-1' || found.customerId === 'customer-001')) ||
-          ((uid === 'cust-2' || uid === 'customer-002') && (found.customerId === 'cust-2' || found.customerId === 'customer-002')) ||
-          ((uid === 'pr-101' || uid === 'priest-001' || uid === 'priest-1') && (found.priestId === 'pr-101' || found.priestId === 'priest-001' || found.priestId === 'priest-1')) ||
-          ((uid === 'pr-102' || uid === 'priest-002' || uid === 'priest-2') && (found.priestId === 'pr-102' || found.priestId === 'priest-002' || found.priestId === 'priest-2'));
+        const isAuthorized = found.customerId === uid || found.priestId === uid;
         if (!isAuthorized) {
           return null;
         }
@@ -250,18 +119,7 @@ export const requestService = {
     filterStatus?: RequestStatus | 'ALL'
   ): Promise<PriestRequest[]> => {
     const requests = await requestService.getRequests('customer', customerId);
-    const customerList = requests.filter(r => {
-      if (r.customerId === customerId) return true;
-      if ((customerId === 'cust-1' || customerId === 'customer-001') &&
-          (r.customerId === 'cust-1' || r.customerId === 'customer-001' || r.customerEmail === 'suresh.nair@example.com')) {
-        return true;
-      }
-      if ((customerId === 'cust-2' || customerId === 'customer-002') &&
-          (r.customerId === 'cust-2' || r.customerId === 'customer-002' || r.customerEmail === 'ananya.reddy@example.com')) {
-        return true;
-      }
-      return false;
-    });
+    const customerList = requests.filter(r => r.customerId === customerId);
 
     if (!filterStatus || filterStatus === 'ALL') {
       return customerList;
@@ -279,18 +137,7 @@ export const requestService = {
     filterStatus?: RequestStatus | 'ALL'
   ): Promise<PriestRequest[]> => {
     const requests = await requestService.getRequests('priest', priestId);
-    const priestList = requests.filter(r => {
-      if (r.priestId === priestId) return true;
-      if ((priestId === 'pr-101' || priestId === 'priest-001' || priestId === 'priest-1') &&
-          (r.priestId === 'pr-101' || r.priestId === 'priest-001' || r.priestId === 'priest-1')) {
-        return true;
-      }
-      if ((priestId === 'pr-102' || priestId === 'priest-002' || priestId === 'priest-2') &&
-          (r.priestId === 'pr-102' || r.priestId === 'priest-002' || r.priestId === 'priest-2')) {
-        return true;
-      }
-      return false;
-    });
+    const priestList = requests.filter(r => r.priestId === priestId);
 
     if (!filterStatus || filterStatus === 'ALL') {
       return priestList;
@@ -349,8 +196,8 @@ export const requestService = {
     const locationString = sanitizeInputString(rawLocationString, 300);
 
     const sanitizedCustomerName = sanitizeInputString(requestData.customerName, 80) || 'Devotee';
-    const sanitizedCustomerPhone = sanitizeInputString(requestData.customerPhone, 25) || '+91 98451 22334';
-    const sanitizedCustomerEmail = sanitizeInputString(requestData.customerEmail, 80) || 'suresh.nair@example.com';
+    const sanitizedCustomerPhone = sanitizeInputString(requestData.customerPhone, 25) || '';
+    const sanitizedCustomerEmail = sanitizeInputString(requestData.customerEmail, 80) || '';
     const rawNotes = requestData.notes || requestData.specialNotes || '';
     const sanitizedNotes = sanitizeInputString(rawNotes, 1000);
 
@@ -361,7 +208,7 @@ export const requestService = {
     const newRequest: PriestRequest = {
       id: uniqueId,
       requestId: uniqueId,
-      customerId: requestData.customerId || auth.currentUser?.uid || 'cust-1',
+      customerId: requestData.customerId || auth.currentUser?.uid || '',
       customerName: sanitizedCustomerName,
       customerPhone: sanitizedCustomerPhone,
       customerEmail: sanitizedCustomerEmail,
@@ -371,7 +218,7 @@ export const requestService = {
       priestImage: requestData.priestImage || requestData.priestAvatar || 'https://images.unsplash.com/photo-1544005313-94ddf0286df2',
       priestTitle: requestData.priestTitle || 'Vedic Acharya',
       priestRating: requestData.priestRating || 4.9,
-      priestPhone: (requestData as any).priestPhone || '+91 98450 11223',
+      priestPhone: (requestData as any).priestPhone || '',
       eventId: requestData.eventId || 'evt-1',
       eventName: requestData.eventName || 'Gruhapravesham',
       serviceId: requestData.serviceId || 'srv-1',

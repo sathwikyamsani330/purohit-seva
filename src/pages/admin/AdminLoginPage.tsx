@@ -4,7 +4,7 @@ import { useAuth } from '../../context/AuthContext';
 import { useToast } from '../../context/ToastContext';
 import { Input } from '../../components/Input';
 import { Button } from '../../components/Button';
-import { ShieldCheck, Mail, Lock, ShieldAlert, Sparkles } from 'lucide-react';
+import { ShieldCheck, Mail, Lock, ShieldAlert } from 'lucide-react';
 
 export const AdminLoginPage: React.FC = () => {
   const { loginAdmin, currentUser } = useAuth();
@@ -37,11 +37,6 @@ export const AdminLoginPage: React.FC = () => {
     } finally {
       setIsLoading(false);
     }
-  };
-
-  const handleFillDemoAdmin = () => {
-    setEmail('admin@purohitseva.in');
-    setPassword('admin123');
   };
 
   return (
@@ -79,7 +74,7 @@ export const AdminLoginPage: React.FC = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             leftIcon={<Mail className="w-4 h-4" />}
-            placeholder="admin@purohitseva.in"
+            placeholder="admin@domain.com"
             required
             className="bg-stone-950 border-stone-800 text-white"
           />
@@ -107,17 +102,6 @@ export const AdminLoginPage: React.FC = () => {
             </Button>
           </div>
         </form>
-
-        <div className="pt-2 border-t border-stone-800/80 text-center">
-          <button
-            type="button"
-            onClick={handleFillDemoAdmin}
-            className="inline-flex items-center gap-1.5 text-xs text-amber-400 hover:text-amber-300 font-medium cursor-pointer transition"
-          >
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>Use Demo Admin Credentials (admin@purohitseva.in)</span>
-          </button>
-        </div>
       </div>
     </div>
   );

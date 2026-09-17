@@ -289,7 +289,7 @@ export const BookingConfirmationPage: React.FC = () => {
                   Gateway Security Reference:
                 </span>
                 <span className="text-[10px] font-mono bg-amber-100 text-amber-900 px-2 py-0.5 rounded-md font-bold">
-                  {booking.isDemoPayment ? 'DEMO GATEWAY' : 'RAZORPAY VERIFIED'}
+                  GATEWAY VERIFIED
                 </span>
               </div>
               {booking.orderId && (

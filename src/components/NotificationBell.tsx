@@ -38,7 +38,7 @@ export const NotificationBell: React.FC<NotificationBellProps> = ({
   const navigate = useNavigate();
   const { currentUser } = useAuth();
 
-  const effectiveUserId = role === 'admin' ? 'admin' : role === 'priest' ? (currentUser?.id || 'pr-101') : (currentUser?.id || 'cust-1');
+  const effectiveUserId = role === 'admin' ? 'admin' : (currentUser?.id || '');
 
   useEffect(() => {
     // Subscribe to real-time notification updates (Firestore onSnapshot + window events)

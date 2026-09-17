@@ -26,7 +26,7 @@ interface NotificationPreferencesModalProps {
 export const NotificationPreferencesModal: React.FC<NotificationPreferencesModalProps> = ({
   isOpen,
   onClose,
-  userId = 'cust-1',
+  userId = '',
   role = 'customer'
 }) => {
   const [preferences, setPreferences] = useState<NotificationPreferences>({

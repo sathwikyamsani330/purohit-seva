@@ -22,7 +22,7 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({
   priestId,
   priestName,
   eventName,
-  customerId = 'cust-1',
+  customerId = '',
   customerName = 'Suresh Nair',
   onReviewSubmitted
 }) => {

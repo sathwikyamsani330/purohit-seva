@@ -41,7 +41,7 @@ export const HomePage: React.FC = () => {
         const [allEvents, allPriests, bookings] = await Promise.all([
           eventService.getEvents(),
           priestService.getPriests(),
-          bookingService.getCustomerBookings(currentUser?.id || 'cust-1')
+          bookingService.getCustomerBookings(currentUser?.id || '')
         ]);
 
         setEvents(allEvents);

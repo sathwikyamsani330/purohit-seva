@@ -120,7 +120,7 @@ export const ceremonyPlanService = {
   /**
    * Call AI to generate a complete personalized ceremony plan
    */
-  generateAIPlan: async (input: CeremonyPlannerInput, userId: string = 'cust-1'): Promise<CeremonyPlan> => {
+  generateAIPlan: async (input: CeremonyPlannerInput, userId: string = ''): Promise<CeremonyPlan> => {
     try {
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 14000);
@@ -142,7 +142,7 @@ export const ceremonyPlanService = {
 
       const newPlan: CeremonyPlan = {
         id: planId,
-        userId: userId || 'cust-1',
+        userId: userId || '',
         title: rawPlan.title || `${rawPlan.ceremonyType || 'Vedic'} Ceremony Plan`,
         ceremonyType: rawPlan.ceremonyType || 'Vedic Puja',
         eventDetails: {
@@ -200,7 +200,7 @@ export const ceremonyPlanService = {
 
       const fallbackPlan: CeremonyPlan = {
         id: planId,
-        userId: userId || 'cust-1',
+        userId: userId || '',
         title: isHouse ? 'Gruhapravesam (Vedic Housewarming Ceremony)' : 'Sri Satyanarayana Swamy Vrata',
         ceremonyType: isHouse ? 'Gruhapravesam / Housewarming' : 'Satyanarayana Puja',
         eventDetails: {
@@ -333,7 +333,7 @@ export const ceremonyPlanService = {
     try {
       if (existingIdx < 0) {
         await notificationService.createNotification({
-          userId: updatedPlan.userId || 'cust-1',
+          userId: updatedPlan.userId || '',
           targetRole: 'customer',
           type: 'CEREMONY_REMINDER',
           category: 'CEREMONY',
@@ -355,7 +355,7 @@ export const ceremonyPlanService = {
    * Get all plans for a user
    */
   getPlans: async (userId: string): Promise<CeremonyPlan[]> => {
-    const targetUserId = userId || 'cust-1';
+    const targetUserId = userId || '';
     let plans: CeremonyPlan[] = [];
 
     // Try Firestore first
@@ -373,7 +373,7 @@ export const ceremonyPlanService = {
     }
 
     // If Firestore returned items, merge with local
-    const local = getLocalPlans().filter(p => p.userId === targetUserId || targetUserId === 'cust-1');
+    const local = getLocalPlans().filter(p => p.userId === targetUserId || !targetUserId);
     const map = new Map<string, CeremonyPlan>();
 
     // Local items
@@ -465,7 +465,7 @@ export const ceremonyPlanService = {
     if (prevReadiness < 80 && newReadiness >= 80) {
       try {
         await notificationService.createNotification({
-          userId: plan.userId || 'cust-1',
+          userId: plan.userId || '',
           targetRole: 'customer',
           type: 'CEREMONY_REMINDER',
           category: 'CEREMONY',

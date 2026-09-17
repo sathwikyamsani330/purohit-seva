@@ -4,7 +4,7 @@ import { useAuth } from '../../context/AuthContext';
 import { useToast } from '../../context/ToastContext';
 import { Input } from '../../components/Input';
 import { Button } from '../../components/Button';
-import { Flame, Mail, Lock, ShieldAlert, Sparkles } from 'lucide-react';
+import { Flame, Mail, Lock, ShieldAlert } from 'lucide-react';
 
 export const PriestLoginPage: React.FC = () => {
   const { loginPriest, loginWithGoogle, currentUser } = useAuth();
@@ -33,8 +33,8 @@ export const PriestLoginPage: React.FC = () => {
       await loginPriest(email, password);
       success('Welcome back, Pandit ji!');
       navigate(from, { replace: true });
-    } catch {
-      error('Invalid priest login credentials.');
+    } catch (err: any) {
+      error(err?.message || 'Invalid priest login credentials.');
     } finally {
       setIsLoading(false);
     }
@@ -52,11 +52,6 @@ export const PriestLoginPage: React.FC = () => {
     } finally {
       setIsGoogleLoading(false);
     }
-  };
-
-  const handleFillDemoPriest = () => {
-    setEmail('raghavendra.sharma@purohitseva.in');
-    setPassword('priest123');
   };
 
   return (
@@ -157,17 +152,6 @@ export const PriestLoginPage: React.FC = () => {
           </div>
         </form>
 
-        <div className="mt-4 pt-3 border-t border-stone-800 text-center">
-          <button
-            type="button"
-            onClick={handleFillDemoPriest}
-            className="inline-flex items-center gap-1.5 text-xs text-amber-400 hover:text-amber-300 font-medium cursor-pointer transition"
-          >
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>Use Demo Acharya (raghavendra.sharma@purohitseva.in)</span>
-          </button>
-        </div>
-
         <div className="mt-4 text-center text-xs text-stone-400">
           New Purohit / Acharya?{' '}
           <Link to="/priest/register" className="text-amber-400 font-bold hover:underline">
@@ -177,7 +161,7 @@ export const PriestLoginPage: React.FC = () => {
 
         <div className="mt-6 pt-4 border-t border-stone-800 text-center">
           <Link to="/login" className="text-xs text-stone-500 hover:text-stone-300">
-            ← Switch to Customer Login
+            ← Return to Devotee Portal
           </Link>
         </div>
       </div>

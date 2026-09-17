@@ -49,12 +49,7 @@ export const NotificationCenterView: React.FC<NotificationCenterViewProps> = ({
   const navigate = useNavigate();
   const { currentUser } = useAuth();
 
-  const effectiveUserId =
-    role === 'admin'
-      ? 'admin'
-      : role === 'priest'
-      ? currentUser?.id || 'pr-101'
-      : currentUser?.id || 'cust-1';
+  const effectiveUserId = role === 'admin' ? 'admin' : (currentUser?.id || '');
 
   useEffect(() => {
     // Real-time subscription across Firestore and local storage event bus

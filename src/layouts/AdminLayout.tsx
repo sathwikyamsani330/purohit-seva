@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Outlet, Link, Navigate, useLocation } from 'react-router-dom';
 import { Sidebar } from '../components/Sidebar';
-import { DemoBanner } from '../components/DemoBanner';
 import { OfflineBanner } from '../components/OfflineBanner';
 import { ErrorBoundary } from '../components/ErrorBoundary';
 import { useAuth } from '../context/AuthContext';
@@ -32,7 +31,6 @@ export const AdminLayout: React.FC = () => {
   return (
     <div className="min-h-screen flex flex-col bg-[#faf8f5] text-[#22060a]">
       <OfflineBanner />
-      <DemoBanner />
 
       <div className="flex flex-1">
         {/* Desktop Sidebar */}

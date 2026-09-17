@@ -26,16 +26,16 @@ export const CustomerProfilePage: React.FC = () => {
   const { currentUser, logout } = useAuth();
   const { success } = useToast();
 
-  const [name, setName] = useState(currentUser?.name || 'Suresh Nair');
-  const [email, setEmail] = useState(currentUser?.email || 'suresh.nair@example.com');
-  const [phone, setPhone] = useState(currentUser?.phone || '+91 98450 11223');
-  const [city, setCity] = useState(currentUser?.city || 'Bengaluru');
-  const [gotra, setGotra] = useState('Kashyapa Gotra');
+  const [name, setName] = useState(currentUser?.name || '');
+  const [email, setEmail] = useState(currentUser?.email || '');
+  const [phone, setPhone] = useState(currentUser?.phone || '');
+  const [city, setCity] = useState(currentUser?.city || '');
+  const [gotra, setGotra] = useState('');
   const [isSaving, setIsSaving] = useState(false);
 
   // Notification preferences state
   const [pref, setPref] = useState<NotificationPreferences>({
-    userId: currentUser?.id || 'cust-1',
+    userId: currentUser?.id || '',
     bookingUpdates: true,
     paymentAlerts: true,
     securityAndSafety: true,
@@ -50,7 +50,9 @@ export const CustomerProfilePage: React.FC = () => {
   });
 
   React.useEffect(() => {
-    notificationService.getPreferences(currentUser?.id || 'cust-1').then(setPref);
+    if (currentUser?.id) {
+      notificationService.getPreferences(currentUser.id).then(setPref);
+    }
   }, [currentUser]);
 
   const handleTogglePref = async (key: keyof NotificationPreferences) => {

@@ -62,7 +62,7 @@ export const RewardsPage: React.FC = () => {
   const [showReferModal, setShowReferModal] = useState(false);
   const [newlyRedeemed, setNewlyRedeemed] = useState<CustomerReward | null>(null);
 
-  const userId = currentUser?.id || 'cust-1';
+  const userId = currentUser?.id || '';
 
   const loadData = async () => {
     setLoading(true);

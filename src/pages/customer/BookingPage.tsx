@@ -242,10 +242,10 @@ export const BookingPage: React.FC = () => {
 
     // Save complete booking draft state
     setDraft({
-      customerId: currentUser?.id || 'cust-1',
+      customerId: currentUser?.id || '',
       customerName: currentUser?.name || 'Devotee',
-      customerPhone: currentUser?.phone || '+91 98450 11223',
-      customerEmail: currentUser?.email || 'suresh.nair@example.com',
+      customerPhone: currentUser?.phone || '',
+      customerEmail: currentUser?.email || '',
       priestId: priest.id,
       priestName: priest.name,
       priestImage: priest.avatarUrl,

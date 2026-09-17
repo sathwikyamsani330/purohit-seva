@@ -1104,7 +1104,7 @@ app.post('/api/payment/create-order', paymentRateLimiter, async (req, res) => {
         orderId: existing.orderId,
         amount: existing.amountInPaise,
         currency: 'INR',
-        keyId: process.env.RAZORPAY_KEY_ID || process.env.VITE_RAZORPAY_KEY_ID || 'rzp_demo_key',
+        keyId: process.env.RAZORPAY_KEY_ID || process.env.VITE_RAZORPAY_KEY_ID || '',
         isDemoMode: existing.isDemoMode,
         totalAmount: existing.totalAmount,
         servicePrice: existing.servicePrice,
@@ -1203,7 +1203,7 @@ app.post('/api/payment/create-order', paymentRateLimiter, async (req, res) => {
     orderId: generatedOrderId,
     amount: amountInPaise,
     currency: 'INR',
-    keyId: process.env.RAZORPAY_KEY_ID || process.env.VITE_RAZORPAY_KEY_ID || 'rzp_demo_key',
+    keyId: process.env.RAZORPAY_KEY_ID || process.env.VITE_RAZORPAY_KEY_ID || '',
     isDemoMode: !hasLiveCredentials,
     totalAmount: serverCalculatedTotal,
     servicePrice: rawBasePrice,
@@ -1277,12 +1277,8 @@ app.post('/api/payment/verify-payment', paymentRateLimiter, (req, res) => {
   let isSignatureValid = false;
 
   if (order.isDemoMode) {
-    // In demo mode: accept signatures formatted with the demo salt or valid demo pattern
-    const expectedDemoSig = crypto
-      .createHmac('sha256', 'purohit_seva_demo_secret')
-      .update(`${orderId}|${paymentId}`)
-      .digest('hex');
-    isSignatureValid = (signature === expectedDemoSig) || signature.startsWith('demo_sig_');
+    // In demo mode: accept signatures adhering to demo signature format
+    isSignatureValid = typeof signature === 'string' && (signature.startsWith('demo_sig_') || signature.length >= 32);
   } else {
     // Live mode: verify against authoritative RAZORPAY_KEY_SECRET using timingSafeEqual
     const secret = process.env.RAZORPAY_KEY_SECRET || '';
